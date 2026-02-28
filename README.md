@@ -1,63 +1,70 @@
-# 📘 Technical Report: Autonomous Navigation & SLAM Implementation
-**Author:** Anantharajan Vel Murugan  
-**Project Type:** Robotics & AI Engineering Portfolio  
-**Platform:** TurtleBot + Raspberry Pi + ROS 2  
+# 🤖 Project Spotlight: Building an Autonomous Navigator
+**By Anantharajan Vel Murugan** *Final-Year Robotics & AI Engineering Student | University of Hertfordshire (PSB Academy)*
 
 ---
 
-## 1. Executive Summary
-This project demonstrates a full-stack robotics implementation focusing on **Simultaneous Localization and Mapping (SLAM)**. [cite_start]As a final-year student at the **University of Hertfordshire (PSB Academy)**, I developed this system to solve the challenges of real-time mapping in unknown indoor environments[cite: 4, 27]. [cite_start]The project bridges the gap between low-level hardware control and high-level AI path planning[cite: 7, 15].
+## 🌟 The Vision
+As I approach my graduation in September 2026, I wanted to tackle one of the most fundamental challenges in robotics: **How does a machine understand its environment?** This project isn't just a classroom exercise; it’s my deep dive into the world of **Simultaneous Localization and Mapping (SLAM)**. 
+
+My goal was to take a raw TurtleBot chassis and transform it into a self-aware navigator capable of creating its own digital maps from scratch using a "brain" powered by ROS 2 and a Raspberry Pi.
 
 ---
 
-## 2. System Architecture & Hardware Specs
-[cite_start]To achieve high-fidelity mapping, I integrated several hardware layers to ensure stable data flow between sensors and the central processing unit[cite: 11, 21].
+## 🛠️ The Hardware Stack: Giving the Robot Senses
+Before writing a single line of code, I had to ensure the physical foundation was solid. I utilized a multi-layered hardware approach to ensure that data flowed seamlessly from the "eyes" (LiDAR) to the "brain" (Raspberry Pi).
 
-### 2.1 Hardware Breakdown
-| Component | Specification | Role |
-| :--- | :--- | :--- |
-| **SBC** | Raspberry Pi 4 | [cite_start]Central ROS 2 compute node [cite: 11, 15] |
-| **Lidar** | 360° Laser Scanner | [cite_start]Environment perception and distance measuring [cite: 15] |
-| **Microcontroller** | STM32 / Arduino | [cite_start]Low-level motor PWM and encoder feedback [cite: 11, 22] |
-| **Chassis** | Custom 3D Printed | [cite_start]Designed in Fusion 360 for sensor stability [cite: 9, 21] |
+### Engineering Breakdown:
+* [cite_start]**The Brain:** A **Raspberry Pi 4** running Ubuntu Linux as the central ROS 2 node[cite: 11, 15].
+* [cite_start]**The Eyes:** A **360° LiDAR** scanner for real-time environment perception[cite: 15].
+* [cite_start]**The Muscles:** **STM32/Arduino** microcontrollers handling the precision PWM signals for the motors[cite: 11, 22].
+* [cite_start]**The Body:** I used **Fusion 360** to design a custom 3D-printed chassis, ensuring every sensor had the perfect vantage point for stable data collection[cite: 9, 21].
 
-
-
----
-
-## 3. Software Implementation & AI Logic
-[cite_start]The "AI-First" mindset of this project relies on efficient data processing and algorithm selection[cite: 7].
-
-### 3.1 SLAM Pipeline
-I utilized **SLAM algorithms** to generate environment occupancy grids. This process involves:
-* [cite_start]**Laser Scan Matching:** Comparing consecutive LiDAR frames to estimate movement.
-* [cite_start]**Loop Closure:** Identifying previously visited areas to correct odometry drift.
-* [cite_start]**Map Generation:** Exporting high-resolution `.pgm` and `.yaml` files for navigation.
-
-### 3.2 Navigation & Path Planning
-[cite_start]Once the map is generated, the **ROS Navigation Stack** handles movement[cite: 15]:
-* **Global Planner:** Uses A* logic to find the shortest path on the static map.
-* **Local Planner:** Uses Dynamic Window Approach (DWA) to avoid obstacles in real-time.
+![The Physical Build](IMAGE_URL_FOR_image_582f14.png)
+*Figure 1: The fully assembled TurtleBot platform featuring integrated LiDAR and Raspberry Pi layers.*
 
 ---
 
-## 4. Engineering Challenges & Solutions
-[cite_start]During development, I encountered several technical hurdles that required iterative debugging[cite: 6]:
+## 🧠 Software & AI Logic: The "A-ha!" Moments
+The real magic happens in the software. [cite_start]I adopted an **"AI-First" mindset**, focusing on how to process messy sensor data into a clean, usable map[cite: 7].
 
-1. **Odometry Drift:** Wheel slippage caused inaccurate mapping.  
-   * [cite_start]**Solution:** Fused IMU data with encoder feedback to improve localization accuracy[cite: 15, 22].
-2. **Computational Latency:** Running SLAM on a Raspberry Pi can be intensive.  
-   * [cite_start]**Solution:** Optimized node execution and offloaded visualization to a remote workstation via ROS 2 Discovery Server[cite: 15].
+### 1. Developing the SLAM Pipeline
+I implemented a SLAM pipeline that doesn't just "see" walls but "remembers" them. This involved:
+* **Laser Scan Matching:** I programmed the system to compare consecutive LiDAR frames to calculate movement with high precision.
+* **Loop Closure:** One of the hardest parts was teaching the robot to recognize a room it had seen before, allowing it to correct "drift" errors instantly.
+
+![Simulation vs Perception](IMAGE_URL_FOR_image_583614.png)
+*Figure 2: Real-time LiDAR scan visualization (blue fans) as the robot identifies obstacles in a simulated environment.*
+
+### 2. The Final Output: Digital Blueprints
+After a successful mapping run, the robot generates high-resolution occupancy grids. These are the "memory" of the robot, saved as `.pgm` and `.yaml` files, which allow it to navigate autonomously later without human help.
+
+![The Resulting Map](IMAGE_URL_FOR_image_583276.png)
+*Figure 3: A finalized 2D occupancy grid (map) generated by the SLAM algorithm.*
 
 ---
 
-## 5. Development Workflow (A-Z)
-### 5.1 Prerequisites
-* [cite_start]**OS:** Ubuntu Linux (ROS 2 Humble/Foxy) [cite: 15]
-* [cite_start]**Languages:** Python (AI Logic) and C (Embedded Drivers) [cite: 10, 11]
-* [cite_start]**Tools:** Visual Studio Code, GitHub, Webots [cite: 12, 17]
+## 🚧 Engineering Challenges: What I Learned
+No engineering project is perfect on the first try. Here is how I handled the technical hurdles:
 
-### 5.2 Deployment Steps
-1. **Initialize Hardware:**
-   ```bash
-   ros2 launch turtlebot3_bringup robot.launch.py
+* **The "Drunken Robot" Problem (Odometry Drift):** Initially, the robot’s wheels would slip, causing the map to look blurry. [cite_start]I solved this by **fusing IMU (Inertial Measurement Unit) data** with wheel encoders to give the robot a better "inner ear" for balance and direction[cite: 15, 22].
+* **Computational Bottlenecks:** Running heavy AI algorithms on a Raspberry Pi is tough. [cite_start]I optimized my node execution and used a **Remote Workstation via ROS 2 Discovery Server** to offload the heavy visualization, keeping the robot's onboard "brain" fast and responsive[cite: 15].
+
+![Monitoring the System](IMAGE_URL_FOR_image_5832ed.png)
+*Figure 4: Monitoring the ROS 2 nodes and TF (Transform) trees during a live navigation mission.*
+
+---
+
+## 🚀 How to Launch
+If you have a ROS 2 environment set up, you can replicate my work:
+
+1. **Hardware Bringup:** `ros2 launch turtlebot3_bringup robot.launch.py`
+2. **Launch SLAM:** `ros2 launch turtlebot3_cartographer slam.launch.py`
+3. **Teleop Drive:** `ros2 run turtlebot3_teleop teleop_keyboard`
+
+---
+
+## 🎯 Looking Forward
+This project proved that I can manage a complex integration of **embedded systems, perception AI, and software architecture**. My next step is to integrate **Deep Learning (TensorFlow)** into this pipeline so the robot can not only "see" a wall but identify if it’s a chair, a table, or a human.
+
+---
+*This project is a cornerstone of my B.Eng (Hons) studies in Robotics and AI at University of Hertfordshire (PSB Academy).*
