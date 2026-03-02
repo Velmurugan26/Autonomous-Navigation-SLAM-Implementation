@@ -1,113 +1,92 @@
-#Autonomous Navigation & Real-Time SLAM using ROS
+# Autonomous Navigation & SLAM using ROS2 | TurtleBot3
 
-Building a robot that can explore, understand, and navigate an unknown environment autonomously
+## Project Summary
 
-##Project Motivation
+This project demonstrates a complete autonomous mobile robot system built using ROS2 and the Navigation2 (Nav2) stack. The robot is capable of mapping unknown environments, localizing itself within the generated map, and navigating autonomously to user-defined goals while avoiding obstacles.
 
-One of the biggest challenges in robotics is enabling a robot to move independently in an environment it has never seen before.
+The objective of this project was to gain hands-on experience with real-world autonomous robotics systems, focusing on the integration of perception, localization, planning, and control on a physical robot platform.
 
-This project focuses on solving that problem by implementing Simultaneous Localization and Mapping (SLAM) and autonomous navigation using the ROS Navigation Stack.
+This work reflects practical implementation experience in autonomous navigation using industry-standard robotics tools.
 
-The robot is able to:
+---
 
-Explore an unknown environment
+## Key Highlights
 
-Build a map in real time
+- Real-time environment mapping using SLAM  
+- Occupancy grid map generation and reuse  
+- Localization using AMCL (particle filter)  
+- Autonomous goal-based navigation  
+- Global path planning and local trajectory control  
+- Dynamic obstacle avoidance using costmaps  
+- System visualization and debugging in RViz  
+- Deployment on TurtleBot3 with Raspberry Pi  
 
-Estimate its own position continuously
+---
 
-Plan safe paths to target locations
+## System Architecture
 
-Navigate autonomously without human assistance
+The navigation pipeline follows a complete robotics workflow:
 
-This project demonstrates my practical experience in building a complete end-to-end autonomous robotics system, similar to those used in real-world service robots and warehouse automation.
+**LiDAR Sensor → SLAM → Map Server → AMCL Localization → Nav2 Stack → Velocity Commands → Robot Motion**
 
-🎯 Project Objectives
+Nav2 Components:
+- Global Planner (A*-based)
+- Local Controller
+- Global and Local Costmaps
+- Recovery Behaviors
 
-The main goals of this project were:
+All system states and robot behavior are monitored in RViz.
 
-Implement real-time SLAM for unknown environments
+---
 
-Integrate ROS Navigation Stack for autonomous movement
+## Hardware Platform
 
-Deploy the system on embedded hardware (Raspberry Pi)
+- TurtleBot3 (Burger)
+- Raspberry Pi (Onboard computation)
+- 2D LiDAR sensor
+- Ubuntu-based remote workstation
+- WiFi communication
 
-Enable manual control for environment exploration
+---
 
-Visualize mapping and navigation in RViz
+## Software Stack
 
-🚀 Key Features
-Real-Time Environment Mapping
+- Ubuntu 22.04
+- ROS2 Humble
+- Navigation2 (Nav2)
+- SLAM Toolbox / Cartographer
+- AMCL
+- RViz2
+- TurtleBot3 ROS2 packages
 
-Generates occupancy grid maps while the robot moves
+---
 
-Uses GMapping SLAM algorithm
+## Project Workflow
 
-No prior map required
+### 1. Environment Mapping (SLAM)
 
-Autonomous Navigation
+The robot is manually controlled using keyboard teleoperation while SLAM runs in real time.  
+During this phase, LiDAR data is processed to generate an occupancy grid map of the environment.
 
-Uses Move Base for global and local path planning
+The generated map is saved for future navigation tasks.
 
-Avoids obstacles dynamically
+---
 
-Reaches target goals safely
+### 2. Localization
 
-Localization
+When the saved map is loaded, the robot uses **Adaptive Monte Carlo Localization (AMCL)** to estimate its pose using a particle filter and sensor observations.
 
-Uses AMCL (Adaptive Monte Carlo Localization)
+---
 
-Continuously estimates robot position on the map
+### 3. Autonomous Navigation
 
-Manual Teleoperation
+Once localized, navigation goals are provided through RViz using the **2D Goal Pose** tool.
 
-Keyboard-based control for exploration
+The Nav2 stack performs:
+- Global path planning
+- Local motion control
+- Obstacle avoidance
+- Recovery behaviors when necessary
 
-Useful for initial map generation
 
-Live Visualization
 
-Real-time monitoring using RViz:
-
-Map
-
-Robot position
-
-Sensor data
-
-Navigation path
-
-🛠️ Technologies & Tools
-Robotics Framework
-
-ROS (Robot Operating System)
-
-ROS Navigation Stack
-
-Algorithms
-
-GMapping (SLAM)
-
-AMCL (Localization)
-
-DWA Local Planner
-
-Global Path Planning
-
-Hardware
-
-TurtleBot platform
-
-Raspberry Pi
-
-LIDAR / depth sensor (simulation or hardware)
-
-Software & Programming
-
-Python
-
-C++
-
-Ubuntu Linux
-
-RViz
