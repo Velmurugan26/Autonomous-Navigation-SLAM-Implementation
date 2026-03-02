@@ -1,0 +1,4 @@
+<launch>
+    <!-- Launch keyboard teleoperation for manual control -->
+    <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="teleop_keyboard" output="screen" />
+</launch>
