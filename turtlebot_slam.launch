@@ -1,0 +1,10 @@
+<launch>
+    <!-- Launch TurtleBot3 driver -->
+    <include file="$(find turtlebot3_bringup)/launch/robot.launch" />
+
+    <!-- Launch SLAM (Gmapping) -->
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" />
+
+    <!-- Launch RViz for visualization -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find turtlebot3_navigation)/rviz/navigation.rviz"/>
+</launch>
